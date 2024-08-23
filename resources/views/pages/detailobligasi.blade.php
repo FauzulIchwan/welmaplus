@@ -157,7 +157,7 @@
     }
 
     let MAX_VALUE = roundDownToMillion(saldo_nasabah);
-    
+
     if (MAX_VALUE == saldo_nasabah) {
       MAX_VALUE = MAX_VALUE - 1000000;
     }
@@ -216,7 +216,9 @@
         // Jalankan fungsi roundDownToMillion
         value = roundDownToMillion(value);
 
-        if(value > MAX_VALUE) {
+        if value < MIN_VALUE) {
+          value = MIN_VALUE;
+        }else if(value > MAX_VALUE) {
           value = MAX_VALUE;
         }
 
