@@ -216,7 +216,7 @@
         // Jalankan fungsi roundDownToMillion
         value = roundDownToMillion(value);
 
-        if value < MIN_VALUE) {
+        if (value < MIN_VALUE) {
           value = MIN_VALUE;
         }else if(value > MAX_VALUE) {
           value = MAX_VALUE;
