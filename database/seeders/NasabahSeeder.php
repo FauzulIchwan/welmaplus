@@ -20,7 +20,7 @@ class NasabahSeeder extends Seeder
                 'username' => 'andhikapratama',
                 'password' => Hash::make('bcabca'),
                 'pin' => '123456',
-                'saldo' => 10000000,
+                'saldo' => 1000000000,
             ],
         ]);
     }

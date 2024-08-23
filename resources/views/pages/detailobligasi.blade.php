@@ -124,7 +124,7 @@
       </div>
       <div class="grid grid-cols-12 px-4 mb-8">
         <div class="col-span-12">
-          <a href="{{ route('obligasi.konfirmasi', $obligasi->id) }}" class="btn btn-primary rounded-3xl text-white btn-block">
+          <a href="{{ route('obligasi.konfirmasi', $obligasi->id) }}" id="submitButton" class="btn btn-primary rounded-3xl text-white btn-block">
             Lanjut
           </a>
         </div>
@@ -144,11 +144,23 @@
     const MIN_VALUE = 1000000; // Batas nilai minimum
     const saldo_nasabah = {{$nasabah->saldo}};
 
+    if (saldo_nasabah < 1027750) {
+      alert('Maaf, Saldo anda kurang untuk membeli obligasi ini');
+      document.getElementById('submitButton').disabled = true;
+      history.back();
+    } else {
+      document.getElementById('submitButton').disabled = false;
+    }
+
     function roundDownToMillion(value) {
       return Math.floor(value / 1000000) * 1000000;
     }
 
     let MAX_VALUE = roundDownToMillion(saldo_nasabah);
+    
+    if (MAX_VALUE == saldo_nasabah) {
+      MAX_VALUE = MAX_VALUE - 1000000;
+    }
 
     function formatNumber(value) {
         return new Intl.NumberFormat('id-ID', {
@@ -203,7 +215,11 @@
         
         // Jalankan fungsi roundDownToMillion
         value = roundDownToMillion(value);
-        
+
+        if(value > MAX_VALUE) {
+          value = MAX_VALUE;
+        }
+
         // Format angka menjadi format Rupiah
         value = new Intl.NumberFormat('id-ID', {
             style: 'currency',
