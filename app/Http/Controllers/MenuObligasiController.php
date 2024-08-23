@@ -44,8 +44,12 @@ class MenuObligasiController extends Controller
     public function show(string $id)
     {
         $obligasi = DB::table('daftar_obligasi')->where('id', $id)->first();
+        $nasabah = Auth::user();
+        // Kurangi saldo nasabah
+        $nasabah = DB::table('nasabah')->where('username', $nasabah->username)->select('saldo')->first();
         $data = [
             'obligasi' => $obligasi,
+            'nasabah' => $nasabah,
         ];
         // dd($data);
         return view('pages.detailobligasi', $data);

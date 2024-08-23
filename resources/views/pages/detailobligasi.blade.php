@@ -142,6 +142,13 @@
     const decreaseButton = document.querySelector('.decrease');
     const cancelButton = document.getElementById('batal');
     const MIN_VALUE = 1000000; // Batas nilai minimum
+    const saldo_nasabah = {{$nasabah->saldo}};
+
+    function roundDownToMillion(value) {
+      return Math.floor(value / 1000000) * 1000000;
+    }
+
+    let MAX_VALUE = roundDownToMillion(saldo_nasabah);
 
     function formatNumber(value) {
         return new Intl.NumberFormat('id-ID', {
@@ -165,14 +172,47 @@
         // Batasi nilai agar tidak kurang dari MIN_VALUE
         if (newValue < MIN_VALUE) {
             newValue = MIN_VALUE;
+        } else if (newValue > MAX_VALUE) {
+            newValue = MAX_VALUE;
         }
-
         updateInputValue(newValue);
     }
 
     currencyInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, '');
-        updateInputValue(parseNumber(value));
+        let value = e.target.value;
+        
+        // Hapus semua karakter yang bukan angka
+        value = value.replace(/[^0-9]/g, '');
+        
+        // Format angka menjadi format Rupiah
+        value = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(value);
+        
+        // Hapus simbol 'Rp' dan spasi untuk mengembalikan hanya angka
+        e.target.value = value.replace(/Rp|\s/g, '');
+    });
+
+    currencyInput.addEventListener('blur', function(e) {
+        let value = e.target.value;
+        
+        // Hapus semua karakter yang bukan angka
+        value = value.replace(/[^0-9]/g, '');
+        
+        // Jalankan fungsi roundDownToMillion
+        value = roundDownToMillion(value);
+        
+        // Format angka menjadi format Rupiah
+        value = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0
+        }).format(value);
+        
+        // Tetap tampilkan dengan simbol 'Rp'
+        e.target.value = value.replace(/Rp|\s/g, '');
     });
 
     increaseButton.addEventListener('click', function() {
@@ -192,7 +232,7 @@
         }
     };
 
-    // Simpan tiap 1 detik
+    //Simpan tiap 1 detik
     setInterval(function() {
       localStorage.setItem('inputValue', currencyInput.value);
     }, 1000);
