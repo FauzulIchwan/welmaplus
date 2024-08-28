@@ -47,6 +47,12 @@ class MenuPortofolioController extends Controller
         //
     }
 
+    public function showPDF()
+    {
+        // dd('pdf');
+        return view('pages.portopdf');
+    }
+
     /**
      * Store a newly created resource in storage.
      */

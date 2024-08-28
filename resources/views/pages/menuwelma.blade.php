@@ -4,7 +4,11 @@
     <div class="lg:h-12 h-12">
       <a href="{{route('menu.index')}}" class="block h-full w-full bg-transparent text-black text-center"></a>
     </div>
-    <div class="lg:h-40 h-36"></div>
+    <div class="lg:h-40 h-36">
+      <div class="float-end">
+        <a href="{{route('portofolio.pdf')}}" class="btn btn-outline btn-primary rounded-2xl text-primary text-center mt-3">PDF</a>
+      </div>
+    </div>
     <div class="text-primary px-12 mb-10 mt-7 lg:mt-3">{{$SID}}</div>
     <div class="lg:h-60 h-56"></div>
     <div class=" h-32 mb-7">

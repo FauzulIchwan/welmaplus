@@ -27,7 +27,8 @@ Route::middleware('auth')->group(function(){
   Route::resource('admin', AdminController::class);
   Route::resource('welma', MenuWelmaController::class);
   Route::resource('obligasi', MenuObligasiController::class);
-  Route::resource('portofolio', menuPortofolioController::class);
+  Route::resource('portofolio', MenuPortofolioController::class);
+  Route::get('porto/pdf', [MenuPortofolioController::class, 'showPDF'])->name('portofolio.pdf');
   Route::get('obligasi/{id}/konfirmasi', [MenuObligasiController::class, 'konfirmasi'])->name('obligasi.konfirmasi');
   Route::get('obligasi/{id}/verifikasi', [MenuObligasiController::class, 'verifikasi'])->name('obligasi.verifikasi');
   Route::get('order/{id}', [MenuObligasiController::class, 'detailorder'])->name('detailorder');
